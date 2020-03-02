@@ -23,7 +23,7 @@ function clamp_values_to() {
 }
 
 function largest_full_rect() {
-    uniq -c | awk '{ print $1 * $2 }' | sort -rg | head -n 1
+    uniq -c | ( while IFS=' ' read -r count value; do printf '%s\n' "$((count * value))"; done ) | sort -rg | head -n 1
 }
 
 function largest_rect_in_histogram() {
