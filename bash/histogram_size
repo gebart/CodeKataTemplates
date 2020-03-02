@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function print_histogram() {
+    # visualization for easier debugging, unused
     for n in "$@"
     do
         printf "%${n}s\n" '' | tr ' ' 'X'
@@ -12,21 +13,25 @@ function unique_values_desc() {
     printf '%s\n' "$@" | sort -rg | uniq
 }
 
-function truncate_lines_to() {
-    local max_width=$1
-    cut -c "1-${max_width}"
+function clamp_values_to() {
+    # Clamp each numeric value to the given max
+    local max_value=$1
+    local value
+    while IFS= read -r value; do
+        printf '%s\n' "$((value < max_value ? value : max_value))"
+    done
 }
 
 function largest_full_rect() {
-    uniq -c | awk '{ print $1 * length($2) }' | sort -gr | head -n 1
+    uniq -c | awk '{ print $1 * $2 }' | sort -rg | head -n 1
 }
 
 function largest_rect_in_histogram() {
-    local histogram=$(print_histogram "$@")
     local maximum_size=0
     for n in $(unique_values_desc "$@"); do
-        local largest_at_this_level=$(printf '%s\n' "${histogram}" | \
-            truncate_lines_to "${n}" | \
+        local largest_at_this_level
+        largest_at_this_level=$(printf '%s\n' "$@" | \
+            clamp_values_to "${n}" | \
             largest_full_rect)
         if [ "${largest_at_this_level}" -gt "${maximum_size}" ]; then
             maximum_size=${largest_at_this_level}

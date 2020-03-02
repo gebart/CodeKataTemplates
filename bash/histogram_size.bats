@@ -43,6 +43,6 @@ source ./histogram_size
 }
 
 @test 'Large numbers' {
-  local actual=$(largest_rect_in_histogram 1000 1000 2 3 4 5 6 1100)
-  [ "${actual}" = 2000 ]
+  local actual=$(largest_rect_in_histogram 1000000000 1000000000 2 3 4 5 6 1100000000)
+  [ "${actual}" = 2000000000 ]
 }
