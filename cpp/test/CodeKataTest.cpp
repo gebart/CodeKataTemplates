@@ -3,15 +3,15 @@
 //
 
 #include "CodeKata.h"
-#include "catch2/catch.hpp"
+#include "doctest.h"
 
-TEST_CASE( "CodeKata example case", "[tag1],[tag2]" ) {
+TEST_CASE( "CodeKata example case" ) {
 
   CodeKata sut( 5 );
 
   REQUIRE( sut.get() == 5 );
 
-  SECTION( "adding changes number" ) {
+  SUBCASE( "adding changes number" ) {
     sut.add(10);
 
     REQUIRE( sut.get() == 15 );
