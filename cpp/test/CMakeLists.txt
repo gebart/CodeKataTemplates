@@ -7,4 +7,4 @@ target_include_directories(CodeKataTest PRIVATE $<BUILD_INTERFACE:${CMAKE_CURREN
 target_include_directories(CodeKataTest PRIVATE $<TARGET_PROPERTY:CodeKata,INCLUDE_DIRECTORIES>)
 target_link_libraries(CodeKataTest PRIVATE CodeKata)
 target_link_libraries(CodeKataTest PRIVATE Catch2::Catch)
-add_test(NAME CodeKataTest COMMAND CodeKataTest)
+catch_discover_tests(CodeKataTest)
